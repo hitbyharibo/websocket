@@ -28,7 +28,7 @@
             text-transform: uppercase;
             margin-bottom: 30px;
         }
-        #joinButton, #musicButton {
+        #joinButton, #musicButton, #aboutButton {
             background-color: #3f24ab;
             color: white;
             padding: 15px 30px;
@@ -74,6 +74,7 @@
     <div id="header">websocket.wtf</div>
     <button id="joinButton" onclick="window.location.href='https://discord.gg/Fwqyz3nSQZ';">Join Us</button>
     <button id="musicButton" onclick="toggleMusic()">Toggle Music</button>
+    <button id="aboutButton" onclick="goToAbout()">About Us</button>
 </div>
 <script>
     function createSnowflake() {
@@ -97,6 +98,10 @@
         } else {
             audio.pause();
         }
+    }
+
+    function goToAbout() {
+        window.location.href = 'https://your-subdomain.example.com/info'; // Replace with your actual subdomain and URL
     }
 </script>
 <audio controls autoplay loop>
