@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>websocket.wtf</title>
+    <link rel="icon" href="logo.png">
+    <style>
+        body {
+            background-color: #1c144a;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace; /* Monospaced font */
+        }
+        #container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        #header {
+            color: #8972e8;
+            font-size: 60px;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace; /* Monospaced font */
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+        #joinButton, #musicButton {
+            background-color: #3f24ab;
+            color: white;
+            padding: 15px 30px;
+            font-size: 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+            font-family: 'Courier New', Courier, monospace; /* Monospaced font */
+        }
+        #musicButton {
+            background-color: #3f24ab;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-family: 'Courier New', Courier, monospace; /* Monospaced font */
+        }
+        .snowflake {
+            position: absolute;
+            color: #3f24ab; /* Purple color */
+            font-size: 30px; /* Adjust the size as needed */
+            animation: snowfall linear infinite;
+        }
+        @keyframes snowfall {
+            0% {
+                transform: translateY(-100vh);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+        audio {
+            display: none; /* Hide the audio element */
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="header">websocket.wtf</div>
+    <button id="joinButton" onclick="window.location.href='https://discord.gg/Fwqyz3nSQZ';">Join Us</button>
+    <button id="musicButton" onclick="toggleMusic()">Toggle Music</button>
+</div>
+<script>
+    function createSnowflake() {
+        const snowflake = document.createElement('div');
+        snowflake.className = 'snowflake';
+        snowflake.innerHTML = '&#10052;';
+        snowflake.style.left = Math.random() * window.innerWidth + 'px';
+        snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+        document.body.appendChild(snowflake);
+        setTimeout(() => {
+            snowflake.remove();
+        }, 5000);
+    }
+
+    setInterval(createSnowflake, 100);
+
+    function toggleMusic() {
+        const audio = document.querySelector('audio');
+        if (audio.paused) {
+            audio.play();
+        } else {
+            audio.pause();
+        }
+    }
+</script>
+<audio controls autoplay loop>
+    <source src="song.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+</body>
+</html>
