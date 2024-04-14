@@ -14,6 +14,8 @@
             font-family: 'Courier New', Courier, monospace; /* Monospaced font */
             box-shadow: 0 0 20px #4f33de; /* Glow effect */
             border: 10px solid #4f33de; /* Thicker border */
+            position: relative;
+            min-height: 100vh; /* Ensure the body covers the entire viewport */
         }
         #container {
             position: absolute;
@@ -21,7 +23,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            z-index: 1; /* Ensure it's above the tracer */
+            z-index: 1; /* Ensure it's above the money signs */
         }
         #header {
             color: #8972e8;
@@ -42,22 +44,34 @@
             margin: 10px;
             font-family: 'Courier New', Courier, monospace; /* Monospaced font */
         }
-        .snowflake {
+        .money {
             position: absolute;
-            color: #3f24ab; /* Purple color */
-            font-size: 50px; /* Larger size */
-            animation: snowfall linear infinite;
+            color: #8972e8; /* Purple color */
+            font-size: 30px; /* Adjust size as needed */
+            animation: moneyfall 10s linear infinite;
         }
-        @keyframes snowfall {
+        @keyframes moneyfall {
             0% {
-                transform: translateY(-100vh);
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 1;
             }
             100% {
-                transform: translateY(150vh); /* Slower and goes further */
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
             }
         }
         audio {
             display: none; /* Hide the audio element */
+        }
+        /* Bottom border */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background-color: #4f33de; /* Purple color */
+            z-index: 2; /* Ensure it's above the money signs */
         }
     </style>
 </head>
@@ -67,6 +81,7 @@
     <button id="joinButton" onclick="window.open('https://discord.gg/Fwqyz3nSQZ', '_blank');">Join Us</button>
     <button id="musicToggle" onclick="toggleMusic()">Toggle Music</button>
 </div>
+<footer></footer>
 <script>
     function toggleMusic() {
         console.log("Toggle Music called");
@@ -87,6 +102,19 @@
             console.error('Audio element not found');
         }
     }
+
+    function createMoney() {
+        const money = document.createElement('div');
+        money.textContent = '$';
+        money.classList.add('money');
+        money.style.left = Math.random() * window.innerWidth + 'px';
+        document.body.appendChild(money);
+        setTimeout(() => {
+            money.remove();
+        }, 10000); // Remove after 10 seconds
+    }
+
+    setInterval(createMoney, 300); // Adjust the interval as needed
 </script>
 <audio controls autoplay loop>
     <source src="song.mp3" type="audio/mpeg">
