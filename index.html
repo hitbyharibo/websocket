@@ -28,27 +28,55 @@
             text-transform: uppercase;
             margin-bottom: 30px;
         }
-        #joinButton, #musicButton, #aboutButton {
-            background-color: #3f24ab;
-            color: white;
-            padding: 15px 30px;
-            font-size: 24px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: 10px;
-            font-family: 'Courier New', Courier, monospace; /* Monospaced font */
-        }
-        #musicButton {
-            background-color: #3f24ab;
-            color: white;
-            padding: 10px 20px;
-            font-size: 18px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
+        .toggle-music-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-top: 20px;
-            font-family: 'Courier New', Courier, monospace; /* Monospaced font */
+        }
+        .toggle-music-slider {
+            -webkit-appearance: none;
+            width: 150px;
+            height: 2px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+        .toggle-music-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: #3f24ab;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .toggle-music-slider::-moz-range-thumb {
+            width: 15px;
+            height: 15px;
+            background: #3f24ab;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        #logo {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+        }
+        .mute-icon {
+            width: 20px;
+            height: auto;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        .mute-icon:hover {
+            opacity: 0.7;
+        }
+        .mute-icon path {
+            fill: #fff;
         }
         .snowflake {
             position: absolute;
@@ -73,7 +101,14 @@
 <div id="container">
     <div id="header">websocket.wtf</div>
     <button id="joinButton" onclick="window.location.href='https://discord.gg/Fwqyz3nSQZ';">Join Us</button>
-    <button id="musicButton" onclick="toggleMusic()">Toggle Music</button>
+    <div class="toggle-music-container">
+        <img id="logo" src="logo.png" alt="Logo">
+        <input type="range" min="0" max="1" step="0.1" value="1" class="toggle-music-slider" id="volumeSlider" onchange="changeVolume(this.value)">
+        <svg class="mute-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" onclick="toggleMute()">
+            <path d="M11 5.5v13h2v-13h-2zm-3.5 4c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h1.5l4 4v-12l-4 4h-1.5z"/>
+            <path d="M0 0h24v24h-24z" fill="none"/>
+        </svg>
+    </div>
     <a href="about.html"><button id="aboutButton">About Us</button></a>
 </div>
 <script>
@@ -97,6 +132,23 @@
             audio.play();
         } else {
             audio.pause();
+        }
+    }
+
+    function changeVolume(volume) {
+        const audio = document.querySelector('audio');
+        audio.volume = volume;
+    }
+
+    function toggleMute() {
+        const audio = document.querySelector('audio');
+        const muteIcon = document.querySelector('.mute-icon');
+        if (audio.muted) {
+            audio.muted = false;
+            muteIcon.innerHTML = '<path d="M11 5.5v13h2v-13h-2zm-3.5 4c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h1.5l4 4v-12l-4 4h-1.5z"/><path d="M0 0h24v24h-24z" fill="none"/>';
+        } else {
+            audio.muted = true;
+            muteIcon.innerHTML = '<path d="M7 9v6h4l5 5v-16l-5 5h-4zm-4 7h2v-10h-2v10zm18-10v10h-2v-10h2zm-4 0h2v10h-2v-10z"/>';
         }
     }
 </script>
