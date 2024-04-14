@@ -23,7 +23,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            z-index: 1; /* Ensure it's above the money signs */
+            z-index: 1; /* Ensure it's above other elements */
         }
         #header {
             color: #8972e8;
@@ -71,7 +71,27 @@
             width: 100%;
             height: 10px;
             background-color: #4f33de; /* Purple color */
-            z-index: 2; /* Ensure it's above the money signs */
+            z-index: 2; /* Ensure it's above other elements */
+        }
+
+        /* Mouse effect */
+        .mouse-effect {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #8972e8; /* Purple color */
+            pointer-events: none; /* To prevent mouse events on the effect */
+            animation: fadeOut 1s ease-out; /* Fade out effect */
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -115,6 +135,18 @@
     }
 
     setInterval(createMoney, 300); // Adjust the interval as needed
+
+    // Mouse effect
+    document.addEventListener('mousemove', (event) => {
+        const mouseEffect = document.createElement('div');
+        mouseEffect.classList.add('mouse-effect');
+        mouseEffect.style.left = `${event.pageX - 10}px`; // Offset by half the size of the effect
+        mouseEffect.style.top = `${event.pageY - 10}px`; // Offset by half the size of the effect
+        document.body.appendChild(mouseEffect);
+        setTimeout(() => {
+            mouseEffect.remove();
+        }, 1000); // Remove after 1 second
+    });
 </script>
 <audio controls autoplay loop>
     <source src="song.mp3" type="audio/mpeg">
