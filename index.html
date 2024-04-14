@@ -95,12 +95,26 @@
         audio {
             display: none; /* Hide the audio element */
         }
+        /* Button styles */
+        .button {
+            background-color: #3f24ab;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .button:hover {
+            background-color: #8972e8;
+        }
     </style>
 </head>
 <body>
 <div id="container">
     <div id="header">websocket.wtf</div>
-    <button id="joinButton" onclick="window.location.href='https://discord.gg/Fwqyz3nSQZ';">Join Us</button>
+    <button id="joinButton" onclick="window.location.href='https://discord.gg/Fwqyz3nSQZ';" class="button">Join Us</button>
     <div class="toggle-music-container">
         <img id="logo" src="logo.png" alt="Logo">
         <input type="range" min="0" max="1" step="0.1" value="1" class="toggle-music-slider" id="volumeSlider" onchange="changeVolume(this.value)">
@@ -109,7 +123,7 @@
             <path d="M0 0h24v24h-24z" fill="none"/>
         </svg>
     </div>
-    <a href="about.html"><button id="aboutButton">About Us</button></a>
+    <a href="about.html" class="button">About Us</a>
 </div>
 <script>
     function createSnowflake() {
