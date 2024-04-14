@@ -34,19 +34,40 @@
             justify-content: center;
             margin-top: 20px;
         }
-        #logo {
-            width: 50px;
-            height: auto;
-            margin-right: 10px;
+        .toggle-music-button {
+            background-color: #3f24ab;
+            color: white;
+            padding: 15px 30px;
+            font-size: 24px;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
+            margin: 10px;
         }
-        .snowflake {
+        .toggle-music-button:hover {
+            background-color: #8972e8;
+        }
+        .music-note {
             position: absolute;
             color: #3f24ab; /* Purple color */
             font-size: 30px; /* Adjust the size as needed */
-            animation: snowfall linear infinite;
+            animation: musicNotes linear infinite;
         }
-        @keyframes snowfall {
+        .money-symbol {
+            position: absolute;
+            color: #3f24ab; /* Purple color */
+            font-size: 30px; /* Adjust the size as needed */
+            animation: moneySymbols linear infinite;
+        }
+        @keyframes musicNotes {
+            0% {
+                transform: translateY(-100vh);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+        @keyframes moneySymbols {
             0% {
                 transform: translateY(-100vh);
             }
@@ -78,37 +99,39 @@
     <div id="header">websocket.wtf</div>
     <button id="joinButton" onclick="window.location.href='https://discord.gg/Fwqyz3nSQZ';" class="button">Join Us</button>
     <div class="toggle-music-container">
-        <img id="logo" src="logo.png" alt="Logo" onclick="toggleMusic()">
+        <button class="toggle-music-button" onclick="toggleMusic()">Toggle Music</button>
     </div>
     <a href="about.html" class="button">About Us</a>
 </div>
 <script>
-    function createSnowflake() {
-        const snowflake = document.createElement('div');
-        snowflake.className = 'snowflake';
-        snowflake.innerHTML = '&#10052;';
-        snowflake.style.left = Math.random() * window.innerWidth + 'px';
-        snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
-        document.body.appendChild(snowflake);
+    function createEffect() {
+        const effect = document.createElement('div');
+        effect.className = isPlaying ? 'music-note' : 'money-symbol';
+        effect.innerHTML = isPlaying ? '♫' : '$';
+        effect.style.left = Math.random() * window.innerWidth + 'px';
+        document.body.appendChild(effect);
         setTimeout(() => {
-            snowflake.remove();
+            effect.remove();
         }, 5000);
     }
 
-    setInterval(createSnowflake, 100);
-
     let isPlaying = false;
     const audio = document.querySelector('audio');
-    
+
     function toggleMusic() {
         if (isPlaying) {
             audio.pause();
             isPlaying = false;
+            // Remove all existing effects when music is paused
+            const existingEffects = document.querySelectorAll('.music-note, .money-symbol');
+            existingEffects.forEach(effect => effect.remove());
         } else {
             audio.play();
             isPlaying = true;
         }
     }
+
+    setInterval(createEffect, 100);
 </script>
 <audio controls autoplay loop>
     <source src="song.mp3" type="audio/mpeg">
