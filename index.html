@@ -12,6 +12,8 @@
             margin: 0;
             padding: 0;
             font-family: 'Courier New', Courier, monospace; /* Monospaced font */
+            box-shadow: 0 0 20px #4f33de; /* Glow effect */
+            border: 10px solid #4f33de; /* Thicker border */
         }
         #container {
             position: absolute;
@@ -19,6 +21,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
+            z-index: 1; /* Ensure it's above the tracer */
         }
         #header {
             color: #8972e8;
@@ -28,7 +31,7 @@
             text-transform: uppercase;
             margin-bottom: 30px;
         }
-        #joinButton, #aboutButton {
+        #joinButton, #musicToggle {
             background-color: #3f24ab;
             color: white;
             padding: 15px 30px;
@@ -42,7 +45,7 @@
         .snowflake {
             position: absolute;
             color: #3f24ab; /* Purple color */
-            font-size: 30px; /* Adjust the size as needed */
+            font-size: 50px; /* Larger size */
             animation: snowfall linear infinite;
         }
         @keyframes snowfall {
@@ -50,106 +53,40 @@
                 transform: translateY(-100vh);
             }
             100% {
-                transform: translateY(100vh);
+                transform: translateY(150vh); /* Slower and goes further */
             }
         }
         audio {
             display: none; /* Hide the audio element */
-        }
-        #musicPrompt {
-            display: none;
-            position: fixed;
-            top: -100%; /* Initially, place it above the viewport */
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #3f24ab;
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            font-size: 24px;
-            z-index: 9999;
-            animation: fadeInOut 6s ease-in-out; /* Adjust duration and timing function as needed */
-        }
-        #musicPrompt button {
-            background-color: #3f24ab;
-            color: white;
-            padding: 15px 30px;
-            font-size: 24px;
-            border: none;
-            border-radius: 50px; /* Round border */
-            cursor: pointer;
-            margin: 10px;
-            font-family: 'Courier New', Courier, monospace; /* Monospaced font */
-        }
-
-        @keyframes fadeInOut {
-            0% {
-                opacity: 0;
-                top: -100%; /* Start from above the viewport */
-            }
-            10% {
-                opacity: 1; /* Fade in */
-                top: 10%; /* Move down a bit */
-            }
-            90% {
-                opacity: 1; /* Stay visible */
-            }
-            100% {
-                opacity: 0; /* Fade out */
-                top: 110%; /* Move below the viewport */
-            }
         }
     </style>
 </head>
 <body>
 <div id="container">
     <div id="header">websocket.wtf</div>
-    <button id="joinButton" onclick="window.location.href='https://discord.gg/Fwqyz3nSQZ';">Join Us</button>
-    <button id="aboutButton" onclick="fadeOutToAbout()">About Us</button>
-</div>
-<div id="musicPrompt">
-    Do you want music on?
-    <button onclick="enableMusic()">Yes</button>
-    <button onclick="hidePrompt()">No</button>
+    <button id="joinButton" onclick="window.open('https://discord.gg/Fwqyz3nSQZ', '_blank');">Join Us</button>
+    <button id="musicToggle" onclick="toggleMusic()">Toggle Music</button>
 </div>
 <script>
-    function createSnowflake() {
-        const snowflake = document.createElement('div');
-        snowflake.className = 'snowflake';
-        snowflake.innerHTML = '$'; // Change snowflake to dollar symbol
-        snowflake.style.left = Math.random() * window.innerWidth + 'px';
-        snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
-        document.body.appendChild(snowflake);
-        setTimeout(() => {
-            snowflake.remove();
-        }, 5000);
-    }
-
-    setInterval(createSnowflake, 100);
-
-    function showPrompt() {
-        document.getElementById('musicPrompt').style.display = 'block';
-    }
-
-    function enableMusic() {
+    function toggleMusic() {
+        console.log("Toggle Music called");
         const audio = document.querySelector('audio');
-        audio.play();
-        hidePrompt();
+        console.log(audio);
+        if (audio) {
+            if (audio.paused) {
+                audio.play()
+                    .then(() => console.log("Music started playing"))
+                    .catch(error => {
+                        console.error('Failed to start playback:', error);
+                    });
+            } else {
+                audio.pause();
+                console.log("Music paused");
+            }
+        } else {
+            console.error('Audio element not found');
+        }
     }
-
-    function hidePrompt() {
-        document.getElementById('musicPrompt').style.display = 'none';
-    }
-
-    function fadeOutToAbout() {
-        const musicPrompt = document.getElementById('musicPrompt');
-        musicPrompt.style.animation = 'fadeOut 3s ease-in-out';
-        setTimeout(() => {
-            window.location.href = 'about.html';
-        }, 2000); // Redirect after 2 seconds (adjust as needed)
-    }
-
-    window.onload = showPrompt;
 </script>
 <audio controls autoplay loop>
     <source src="song.mp3" type="audio/mpeg">
