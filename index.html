@@ -74,7 +74,7 @@
     <div id="header">websocket.wtf</div>
     <button id="joinButton" onclick="window.location.href='https://discord.gg/Fwqyz3nSQZ';">Join Us</button>
     <button id="musicButton" onclick="toggleMusic()">Toggle Music</button>
-    <button id="aboutButton" onclick="goToAbout()">About Us</button>
+    <a href="about.html"><button id="aboutButton">About Us</button></a>
 </div>
 <script>
     function createSnowflake() {
@@ -98,10 +98,6 @@
         } else {
             audio.pause();
         }
-    }
-
-    function goToAbout() {
-        window.location.href = 'https://info.websocket.wtf'; // Replace with the actual URL of your subdomain
     }
 </script>
 <audio controls autoplay loop>
